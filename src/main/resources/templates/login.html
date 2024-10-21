@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đăng nhập</title>
+</head>
+<body>
+<h1>Đăng nhập</h1>
+
+<form id="loginForm" action="/api/auth/login" method="post">
+    <input type="text" name="username" placeholder="Tài khoản" required><br>
+    <input type="password" name="password" placeholder="Mật khẩu" required><br>
+    <button type="submit">Đăng nhập</button>
+</form>
+
+<!-- Nút chuyển hướng đến trang đăng ký -->
+<p>Chưa có tài khoản? <a href="/register">Đăng ký ngay</a></p>
+
+<!-- Nút quay về trang chủ -->
+<button onclick="window.location.href='/'">Quay về Trang Chủ</button>
+
+<script>
+    document.getElementById("loginForm").onsubmit = function(event) {
+        event.preventDefault();  // Ngăn chặn việc gửi form thông thường
+        var formData = new FormData(this);
+
+        fetch(this.action, {
+            method: "POST",
+            body: new URLSearchParams(formData)  // Chuyển dữ liệu thành định dạng application/x-www-form-urlencoded
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();  // Lấy URL chuyển hướng từ phản hồi
+                } else {
+                    throw new Error("Sai tài khoản hoặc mật khẩu!");
+                }
+            })
+            .then(redirectUrl => {
+                window.location.href = redirectUrl;  // Chuyển hướng tới trang tương ứng
+            })
+            .catch(error => {
+                alert(error.message);  // Hiển thị lỗi nếu có
+            });
+    };
+</script>
+
+</body>
+</html>

@@ -592,6 +592,15 @@ svg.social:hover {
 
 /* 4.1 Header
 /*----------------------------------------------*/
+.d-flex.align-items-center a {
+  font-size: 16px; /* Kích thước chữ */
+  color: var(--dark-color); /* Màu chữ */
+  text-transform: capitalize; /* Viết hoa chữ cái đầu tiên */
+}
+
+.d-flex.align-items-center a:hover {
+  color: var(--primary-color); /* Màu chữ khi hover */
+}
 
 a.nav-link {
   text-transform: capitalize;
