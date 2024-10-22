@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Quản lý Đặt Phòng</title>
+  <title>Hóa đơn đặt phòng</title>
 </head>
 <body>
-<h1>Danh sách đặt phòng</h1>
-
+<h1>Hóa đơn đặt phòng của bạn</h1>
 <table border="1">
   <thead>
   <tr>
-    <th>Tên người đặt</th>
+    <th>ID</th>
     <th>Ngày nhận phòng</th>
     <th>Ngày trả phòng</th>
     <th>Số phòng</th>
+    <th>Hủy đặt</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="booking : ${bookings}">
-    <td th:text="${booking.username}"></td>
+    <td th:text="${booking.id}"></td>
     <td th:text="${booking.checkInDate}"></td>
     <td th:text="${booking.checkOutDate}"></td>
     <td th:text="${booking.rooms}"></td>
+    <td>
+      <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
+        <button type="submit">Hủy</button>
+      </form>
+    </td>
   </tr>
   </tbody>
 </table>
