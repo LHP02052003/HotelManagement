@@ -17,8 +17,9 @@ public class Booking {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private int rooms;
+    private int numberOfGuests;  // Thêm trường này
 
-    // Getters và Setters nếu không dùng Lombok
+    // Getter và Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -33,4 +34,7 @@ public class Booking {
 
     public int getRooms() { return rooms; }
     public void setRooms(int rooms) { this.rooms = rooms; }
+
+    public int getNumberOfGuests() { return numberOfGuests; }  // Thêm getter
+    public void setNumberOfGuests(int numberOfGuests) { this.numberOfGuests = numberOfGuests; }  // Thêm setter
 }

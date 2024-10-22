@@ -1,30 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <title>Quản lý Đặt Phòng</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Booking</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
 </head>
 <body>
-<h1>Danh sách đặt phòng</h1>
+<div class="container">
+  <h2 class="mt-5">Danh sách đặt phòng</h2>
 
-<table border="1">
-  <thead>
-  <tr>
-    <th>Tên người đặt</th>
-    <th>Ngày nhận phòng</th>
-    <th>Ngày trả phòng</th>
-    <th>Số phòng</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="booking : ${bookings}">
-    <td th:text="${booking.username}"></td>
-    <td th:text="${booking.checkInDate}"></td>
-    <td th:text="${booking.checkOutDate}"></td>
-    <td th:text="${booking.rooms}"></td>
-  </tr>
-  </tbody>
-</table>
+  <!-- Nút quay về trang chủ -->
+  <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
 
-<a href="/">Quay lại trang chủ</a>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Tên người đặt</th>
+      <th>Ngày nhận phòng</th>
+      <th>Ngày trả phòng</th>
+      <th>Số phòng</th>
+      <th>Số người đăng ký</th>
+      <th>Hủy đặt</th>
+    </tr>
+    <tr th:each="booking : ${bookings}">
+      <td th:text="${booking.id}"></td>
+      <td th:text="${booking.username}"></td>
+      <td th:text="${booking.checkInDate}"></td>
+      <td th:text="${booking.checkOutDate}"></td>
+      <td th:text="${booking.rooms}"></td>
+      <td th:text="${booking.numberOfGuests}"></td>
+      <td>
+        <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
+          <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

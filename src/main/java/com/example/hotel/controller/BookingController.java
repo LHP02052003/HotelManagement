@@ -23,6 +23,7 @@ public class BookingController {
     public String createBooking(@RequestParam String checkInDate,
                                 @RequestParam String checkOutDate,
                                 @RequestParam int rooms,
+                                @RequestParam int guests,  // Thêm tham số guests
                                 HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
@@ -34,10 +35,12 @@ public class BookingController {
         booking.setCheckInDate(LocalDate.parse(checkInDate));
         booking.setCheckOutDate(LocalDate.parse(checkOutDate));
         booking.setRooms(rooms);
+        booking.setNumberOfGuests(guests);  // Lưu số người đăng ký
 
         bookingService.saveBooking(booking);
         return "redirect:/";
     }
+
 
     @GetMapping("/user-bookings")
     public String userBookings(HttpSession session, Model model) {

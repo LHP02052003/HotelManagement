@@ -12,6 +12,7 @@
     <th>Ngày nhận phòng</th>
     <th>Ngày trả phòng</th>
     <th>Số phòng</th>
+    <th>Số người</th>
     <th>Hủy đặt</th>
   </tr>
   </thead>
@@ -21,6 +22,7 @@
     <td th:text="${booking.checkInDate}"></td>
     <td th:text="${booking.checkOutDate}"></td>
     <td th:text="${booking.rooms}"></td>
+    <td th:text="${booking.numberOfGuests}"></td>
     <td>
       <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
         <button type="submit">Hủy</button>
