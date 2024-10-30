@@ -22,8 +22,8 @@ public class BookingController {
     @PostMapping("/create")
     public String createBooking(@RequestParam String checkInDate,
                                 @RequestParam String checkOutDate,
-                                @RequestParam int rooms,
-                                @RequestParam int guests,  // Thêm tham số guests
+                                @RequestParam int roomType, // Thay đổi từ rooms sang roomType
+                                @RequestParam int guests,
                                 HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
@@ -34,7 +34,7 @@ public class BookingController {
         booking.setUsername(username);
         booking.setCheckInDate(LocalDate.parse(checkInDate));
         booking.setCheckOutDate(LocalDate.parse(checkOutDate));
-        booking.setRooms(rooms);
+        booking.setRoomType(roomType); // Cập nhật gọi setter này
         booking.setNumberOfGuests(guests);  // Lưu số người đăng ký
 
         bookingService.saveBooking(booking);

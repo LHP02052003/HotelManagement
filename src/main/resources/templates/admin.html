@@ -40,7 +40,7 @@
       <th>Tên người đặt</th>
       <th>Ngày nhận phòng</th>
       <th>Ngày trả phòng</th>
-      <th>Loại phòng</th>
+      <th>Loại phòng</th> <!-- Cập nhật tiêu đề -->
       <th>Số người đăng ký</th>
       <th>Hủy đặt</th>
     </tr>
@@ -49,7 +49,7 @@
       <td th:text="${booking.username}"></td>
       <td th:text="${booking.checkInDate}"></td>
       <td th:text="${booking.checkOutDate}"></td>
-      <td th:text="${booking.rooms}"></td>
+      <td th:text="${booking.roomType}"></td> <!-- Cập nhật từ rooms thành roomType -->
       <td th:text="${booking.numberOfGuests}"></td>
       <td>
         <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
@@ -61,4 +61,3 @@
 </div>
 </body>
 </html>
-

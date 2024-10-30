@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Table(name = "room_db")
 @Data
 public class Booking {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,10 +15,10 @@ public class Booking {
     private String username;  // Tên người dùng đặt phòng
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private int rooms;
-    private int numberOfGuests;  // Thêm trường này
+    private int roomType; // Thay đổi tên từ rooms thành roomType
+    private int numberOfGuests;  // Số lượng khách
 
-    // Getter và Setter
+    // Các getter và setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -32,9 +31,9 @@ public class Booking {
     public LocalDate getCheckOutDate() { return checkOutDate; }
     public void setCheckOutDate(LocalDate checkOutDate) { this.checkOutDate = checkOutDate; }
 
-    public int getRooms() { return rooms; }
-    public void setRooms(int rooms) { this.rooms = rooms; }
+    public int getRoomType() { return roomType; } // Cập nhật getter
+    public void setRoomType(int roomType) { this.roomType = roomType; } // Cập nhật setter
 
-    public int getNumberOfGuests() { return numberOfGuests; }  // Thêm getter
-    public void setNumberOfGuests(int numberOfGuests) { this.numberOfGuests = numberOfGuests; }  // Thêm setter
+    public int getNumberOfGuests() { return numberOfGuests; }
+    public void setNumberOfGuests(int numberOfGuests) { this.numberOfGuests = numberOfGuests; }
 }
