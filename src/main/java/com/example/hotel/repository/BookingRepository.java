@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByUsername(String username);
+    long countByRoomType(int roomType); // Đếm số lượng phòng đã đặt theo loại phòng
 }

@@ -31,8 +31,15 @@
 <div class="container">
   <h2 class="mt-5">Danh sách đặt phòng</h2>
 
-  <!-- Nút quay về trang chủ -->
   <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
+
+  <!-- Thông tin về số lượng phòng -->
+  <div class="mb-3">
+    <h4>Thông tin phòng:</h4>
+    <p>Loại phòng 1: Tổng số - <span th:text="${totalRoomType1}"></span>, Còn lại - <span th:text="${remainingRoomType1}"></span></p>
+    <p>Loại phòng 2: Tổng số - <span th:text="${totalRoomType2}"></span>, Còn lại - <span th:text="${remainingRoomType2}"></span></p>
+    <p>Loại phòng 3: Tổng số - <span th:text="${totalRoomType3}"></span>, Còn lại - <span th:text="${remainingRoomType3}"></span></p>
+  </div>
 
   <table>
     <tr>
@@ -40,7 +47,7 @@
       <th>Tên người đặt</th>
       <th>Ngày nhận phòng</th>
       <th>Ngày trả phòng</th>
-      <th>Loại phòng</th> <!-- Cập nhật tiêu đề -->
+      <th>Loại phòng</th>
       <th>Số người đăng ký</th>
       <th>Hủy đặt</th>
     </tr>
@@ -49,7 +56,7 @@
       <td th:text="${booking.username}"></td>
       <td th:text="${booking.checkInDate}"></td>
       <td th:text="${booking.checkOutDate}"></td>
-      <td th:text="${booking.roomType}"></td> <!-- Cập nhật từ rooms thành roomType -->
+      <td th:text="${booking.roomType}"></td>
       <td th:text="${booking.numberOfGuests}"></td>
       <td>
         <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">

@@ -55,8 +55,18 @@ public class BookingController {
     }
 
     @PostMapping("/cancel/{id}")
-    public String cancelBooking(@PathVariable Long id) {
+    public String cancelBooking(@PathVariable Long id, HttpSession session) {
         bookingService.deleteBooking(id);
-        return "redirect:/booking/user-bookings";
+
+        // Kiểm tra vai trò người dùng
+        String role = (String) session.getAttribute("role");
+        if ("ADMIN".equals(role)) {
+            // Nếu là admin, quay lại trang admin
+            return "redirect:/admin";
+        } else {
+            // Nếu là user, quay lại trang đặt phòng của user
+            return "redirect:/booking/user-bookings";
+        }
     }
+
 }
