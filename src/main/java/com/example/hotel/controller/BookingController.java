@@ -37,7 +37,7 @@ public class BookingController {
         booking.setRoomType(roomType); // Cập nhật gọi setter này
         booking.setNumberOfGuests(guests);  // Lưu số người đăng ký
 
-        bookingService.saveBooking(booking);
+        bookingService.saveBooking( booking);
         return "redirect:/";
     }
 
