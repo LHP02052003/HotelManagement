@@ -22,22 +22,42 @@ public class BookingController {
     @PostMapping("/create")
     public String createBooking(@RequestParam String checkInDate,
                                 @RequestParam String checkOutDate,
-                                @RequestParam int roomType, // Thay đổi từ rooms sang roomType
+                                @RequestParam int roomType,
                                 @RequestParam int guests,
-                                HttpSession session) {
+                                HttpSession session,
+                                Model model) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
             return "redirect:/login"; // Nếu chưa đăng nhập, chuyển về trang đăng nhập
         }
 
+        // Lấy tổng số phòng dựa vào roomType
+        int totalRooms = switch (roomType) {
+            case 1 -> 40;
+            case 2 -> 50;
+            case 3 -> 60;
+            default -> 0;
+        };
+
+        // Đếm số phòng đã được đặt
+        long bookedRooms = bookingService.countRoomsByType(roomType);
+
+        // Kiểm tra nếu hết phòng
+        if (totalRooms - (int) bookedRooms <= 0) {
+            // Nếu không còn phòng, hiển thị thông báo
+            model.addAttribute("soldOutMessage", "Loại phòng này đã hết. Vui lòng chọn loại phòng khác.");
+            return "booking-failed"; // Tên trang hiển thị thông báo lỗi, ví dụ: booking-failed.html
+        }
+
+        // Tiếp tục xử lý đặt phòng
         Booking booking = new Booking();
         booking.setUsername(username);
         booking.setCheckInDate(LocalDate.parse(checkInDate));
         booking.setCheckOutDate(LocalDate.parse(checkOutDate));
-        booking.setRoomType(roomType); // Cập nhật gọi setter này
-        booking.setNumberOfGuests(guests);  // Lưu số người đăng ký
+        booking.setRoomType(roomType);
+        booking.setNumberOfGuests(guests);
 
-        bookingService.saveBooking( booking);
+        bookingService.saveBooking(booking);
         return "redirect:/";
     }
 
