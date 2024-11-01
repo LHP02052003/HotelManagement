@@ -295,7 +295,7 @@
                   <li><a href="/" class="dropdown-item">Blog-Single</a></li>
                   <li><a href="/" class="dropdown-item">Services</a></li>
                   <li><a href="/" class="dropdown-item">Service-Details</a></li>
-                  <li><a href="/" class="dropdown-item">Booking</a></li>
+                  <li><a th:href="@{/booking/user-bookings}" class="dropdown-item">Booking</a></li>
                   <li><a href="/" class="dropdown-item">Gallery</a></li>
                   <li><a href="/" class="dropdown-item">Contact</a></li>
                   <li><a href="/" class="dropdown-item">Team</a></li>
@@ -306,15 +306,8 @@
             </ul>
             <div class="d-flex align-items-center">
               <div th:if="${session.username != null}">
-                <!-- Kiểm tra xem người dùng có phải là admin không -->
-                <a th:if="${session.role != null && session.role == 'ADMIN'}"
-                   th:href="@{/admin}"
-                   class="nav-link px-3"
-                   th:text="${session.username}"></a>
-                <a th:if="${session.role == null || session.role != 'ADMIN'}"
-                   th:href="@{/booking/user-bookings}"
-                   class="nav-link px-3"
-                   th:text="${session.username}"></a>
+                <!-- Phần tên user nằm trên nút Đăng xuất -->
+                <a class="nav-link px-3" th:text="${session.username}"></a>
                 <a href="/api/auth/logout" class="nav-link px-3">Đăng xuất</a>
               </div>
               <div th:if="${session.username == null}">
@@ -322,6 +315,7 @@
                 <a href="/register" class="nav-link px-3">Đăng ký</a>
               </div>
             </div>
+
 
 
           </div>
