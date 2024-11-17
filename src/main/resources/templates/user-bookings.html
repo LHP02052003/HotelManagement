@@ -11,7 +11,7 @@
     <th>ID</th>
     <th>Ngày nhận phòng</th>
     <th>Ngày trả phòng</th>
-    <th>Loại phòng</th> <!-- Cập nhật tiêu đề -->
+    <th>Loại phòng</th> <!-- Đã cập nhật tiêu đề -->
     <th>Số người</th>
     <th>Hủy đặt</th>
   </tr>
@@ -21,7 +21,7 @@
     <td th:text="${booking.id}"></td>
     <td th:text="${booking.checkInDate}"></td>
     <td th:text="${booking.checkOutDate}"></td>
-    <td th:text="${booking.roomType}"></td> <!-- Cập nhật từ rooms thành roomType -->
+    <td th:text="${booking.roomType}"></td> <!-- Loại phòng -->
     <td th:text="${booking.numberOfGuests}"></td>
     <td>
       <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">

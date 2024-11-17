@@ -32,7 +32,8 @@ public class BookingService {
         return bookingRepository.findAll(); // Giả định rằng bookingRepository đã có phương thức này
     }
 
-    public long countRoomsByType(int roomType) {
-        return bookingRepository.countByRoomType(roomType);
+    public long countRoomsByType(String roomType) {
+        return bookingRepository.countByRoomType(roomType); // Cập nhật với kiểu String
     }
+
 }

@@ -15,7 +15,7 @@ public class Booking {
     private String username;  // Tên người dùng đặt phòng
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private int roomType; // Thay đổi tên từ rooms thành roomType
+    private String roomType; // Thay đổi tên từ rooms thành roomType
     private int numberOfGuests;  // Số lượng khách
 
     // Các getter và setter
@@ -31,8 +31,8 @@ public class Booking {
     public LocalDate getCheckOutDate() { return checkOutDate; }
     public void setCheckOutDate(LocalDate checkOutDate) { this.checkOutDate = checkOutDate; }
 
-    public int getRoomType() { return roomType; } // Cập nhật getter
-    public void setRoomType(int roomType) { this.roomType = roomType; } // Cập nhật setter
+    public String getRoomType() { return roomType; } // Cập nhật getter
+    public void setRoomType(String roomType) { this.roomType = roomType; } // Cập nhật setter
 
     public int getNumberOfGuests() { return numberOfGuests; }
     public void setNumberOfGuests(int numberOfGuests) { this.numberOfGuests = numberOfGuests; }

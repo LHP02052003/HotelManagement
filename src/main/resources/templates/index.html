@@ -295,7 +295,7 @@
                   <li><a href="/" class="dropdown-item">Blog-Single</a></li>
                   <li><a href="/" class="dropdown-item">Services</a></li>
                   <li><a href="/" class="dropdown-item">Service-Details</a></li>
-                  <li><a th:href="@{/booking/user-bookings}" class="dropdown-item">Booking</a></li>
+                  <li><a class="dropdown-item" aria-current="page" href="/booking/booking-page">Booking</a></li>
                   <li><a href="/" class="dropdown-item">Gallery</a></li>
                   <li><a href="/" class="dropdown-item">Contact</a></li>
                   <li><a href="/" class="dropdown-item">Team</a></li>
@@ -303,18 +303,19 @@
                   <li><a href="/" class="dropdown-item">FAQs</a></li>
                 </ul>
               </li>
+
+              <!-- Đăng nhập / Đăng ký -->
+              <li class="nav-item px-3">
+                <div th:if="${session.username != null}" class="d-flex align-items-center">
+                  <a class="nav-link px-3" th:text="${session.username}"></a>
+                  <a href="/api/auth/logout" class="nav-link px-3">Đăng xuất</a>
+                </div>
+                <div th:if="${session.username == null}" class="d-flex align-items-center">
+                  <a href="/login" class="nav-link px-3">Đăng nhập</a>
+                  <a href="/register" class="nav-link px-3">Đăng ký</a>
+                </div>
+              </li>
             </ul>
-            <div class="d-flex align-items-center">
-              <div th:if="${session.username != null}">
-                <!-- Phần tên user nằm trên nút Đăng xuất -->
-                <a class="nav-link px-3" th:text="${session.username}"></a>
-                <a href="/api/auth/logout" class="nav-link px-3">Đăng xuất</a>
-              </div>
-              <div th:if="${session.username == null}">
-                <a href="/login" class="nav-link px-3">Đăng nhập</a>
-                <a href="/register" class="nav-link px-3">Đăng ký</a>
-              </div>
-            </div>
 
 
 
@@ -395,7 +396,7 @@
           <form id="form"
                 class="form-group flex-wrap bg-white p-5 rounded-4 ms-md-5"
                 th:action="@{/booking/create}" method="post">
-            <h3 class="display-5">Check availability</h3>
+            <h3 class="display-5">Reserve Now</h3>
 
             <div class="col-lg-12 my-4">
               <label class="form-label text-uppercase">Check-In</label>
@@ -408,8 +409,12 @@
             </div>
 
             <div class="col-lg-12 my-4">
-              <label class="form-label text-uppercase">Rooms</label>
-              <input type="number" name="roomType" min="1" max="3" class="form-control text-black-50 ps-3" required>
+              <label class="form-label text-uppercase">Room Type</label>
+              <select name="roomType" class="form-control text-black-50 ps-3" required>
+                <option value="DELUXE">Deluxe</option>
+                <option value="COUPLE">Couple</option>
+                <option value="FAMILY">Family</option>
+              </select>
             </div>
 
             <div class="col-lg-12 my-4">
@@ -417,14 +422,13 @@
               <input type="number" name="guests" min="1" class="form-control text-black-50 ps-3" required>
             </div>
 
-
             <div class="d-grid">
               <button type="submit" class="btn btn-arrow btn-primary mt-3">
-                <span>Check availability
-                    <svg width="18" height="18">
-                        <use xlink:href="#arrow-right"></use>
-                    </svg>
-                </span>
+        <span>Reserve Now
+            <svg width="18" height="18">
+                <use xlink:href="#arrow-right"></use>
+            </svg>
+        </span>
               </button>
             </div>
           </form>

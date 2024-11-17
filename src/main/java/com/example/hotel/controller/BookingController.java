@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 @RequestMapping("/booking")
@@ -22,7 +21,7 @@ public class BookingController {
     @PostMapping("/create")
     public String createBooking(@RequestParam String checkInDate,
                                 @RequestParam String checkOutDate,
-                                @RequestParam int roomType,
+                                @RequestParam String roomType,  // Thay đổi thành String
                                 @RequestParam int guests,
                                 HttpSession session,
                                 Model model) {
@@ -33,9 +32,9 @@ public class BookingController {
 
         // Lấy tổng số phòng dựa vào roomType
         int totalRooms = switch (roomType) {
-            case 1 -> 40;
-            case 2 -> 50;
-            case 3 -> 60;
+            case "DELUXE" -> 40;
+            case "COUPLE" -> 50;
+            case "FAMILY" -> 60;
             default -> 0;
         };
 
@@ -54,7 +53,7 @@ public class BookingController {
         booking.setUsername(username);
         booking.setCheckInDate(LocalDate.parse(checkInDate));
         booking.setCheckOutDate(LocalDate.parse(checkOutDate));
-        booking.setRoomType(roomType);
+        booking.setRoomType(roomType);  // Lưu trữ tên loại phòng
         booking.setNumberOfGuests(guests);
 
         bookingService.saveBooking(booking);
@@ -62,16 +61,19 @@ public class BookingController {
     }
 
 
-    @GetMapping("/user-bookings")
-    public String userBookings(HttpSession session, Model model) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
 
-        List<Booking> bookings = bookingService.findByUsername(username);
-        model.addAttribute("bookings", bookings);
-        return "user-bookings";  // Tên view cần khớp với tên file
+    @GetMapping("/booking-page")
+    public String bookingPage(HttpSession session) {
+        // Check user role
+        String role = (String) session.getAttribute("role");
+
+        if ("ADMIN".equals(role)) {
+            // If admin, redirect to admin booking page
+            return "redirect:/admin"; // Replace with the URL that maps to admin.html
+        } else {
+            // If user, show regular booking page
+            return "user-bookings"; // Page where users manage their bookings
+        }
     }
 
     @PostMapping("/cancel/{id}")
