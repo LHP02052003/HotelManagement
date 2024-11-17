@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/booking")
@@ -63,17 +64,33 @@ public class BookingController {
 
 
     @GetMapping("/booking-page")
-    public String bookingPage(HttpSession session) {
-        // Check user role
+    public String bookingPage(HttpSession session, Model model) {
         String role = (String) session.getAttribute("role");
+        String username = (String) session.getAttribute("username");
 
         if ("ADMIN".equals(role)) {
-            // If admin, redirect to admin booking page
-            return "redirect:/admin"; // Replace with the URL that maps to admin.html
+            return "redirect:/admin";
         } else {
-            // If user, show regular booking page
-            return "user-bookings"; // Page where users manage their bookings
+            // Nếu là user, lấy danh sách booking của user
+            List<Booking> bookings = bookingService.findByUsername(username);
+            model.addAttribute("bookings", bookings);
+            return "user-bookings";
         }
+    }
+
+
+    @GetMapping("/user-bookings")
+    public String userBookings(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/login"; // Nếu chưa đăng nhập, chuyển về trang đăng nhập
+        }
+
+        // Lấy danh sách đặt phòng của người dùng hiện tại
+        List<Booking> userBookings = bookingService.findByUsername(username);
+        model.addAttribute("bookings", userBookings);
+
+        return "user-bookings"; // Tên trang HTML cho người dùng
     }
 
     @PostMapping("/cancel/{id}")

@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hóa đơn đặt phòng</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Hóa đơn đặt phòng của bạn</h1>
-<table border="1">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Ngày nhận phòng</th>
-    <th>Ngày trả phòng</th>
-    <th>Loại phòng</th> <!-- Đã cập nhật tiêu đề -->
-    <th>Số người</th>
-    <th>Hủy đặt</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="booking : ${bookings}">
-    <td th:text="${booking.id}"></td>
-    <td th:text="${booking.checkInDate}"></td>
-    <td th:text="${booking.checkOutDate}"></td>
-    <td th:text="${booking.roomType}"></td> <!-- Loại phòng -->
-    <td th:text="${booking.numberOfGuests}"></td>
-    <td>
-      <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
-        <button type="submit">Hủy</button>
-      </form>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="container mt-5">
+  <h1 class="mb-4">Hóa đơn đặt phòng của bạn</h1>
 
-<a href="/">Quay lại trang chủ</a>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Ngày nhận phòng</th>
+      <th>Ngày trả phòng</th>
+      <th>Loại phòng</th>
+      <th>Số người</th>
+      <th>Hủy đặt</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="booking : ${bookings}">
+      <td th:text="${booking.id}"></td>
+      <td th:text="${booking.checkInDate}"></td>
+      <td th:text="${booking.checkOutDate}"></td>
+      <td th:text="${booking.roomType}"></td>
+      <td th:text="${booking.numberOfGuests}"></td>
+      <td>
+        <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
+          <button type="submit" class="btn btn-danger">Hủy</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a href="/" class="btn btn-primary">Quay lại trang chủ</a>
+</div>
 </body>
 </html>
