@@ -1,10 +1,12 @@
+
 package com.example.hotel.service;
 
-import javax.annotation.PostConstruct;
 import com.example.hotel.model.User;
 import com.example.hotel.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 
 
