@@ -41,9 +41,9 @@ public class HomeController {
             model.addAttribute("bookings", bookings);
 
             // Thông tin phòng
-            int totalDeluxe = 40;
+            int totalDeluxe = 60;
             int totalCouple = 50;
-            int totalFamily = 60;
+            int totalFamily = 40;
 
             long bookedDeluxe = bookingService.countRoomsByType("DELUXE");
             long bookedCouple = bookingService.countRoomsByType("COUPLE");

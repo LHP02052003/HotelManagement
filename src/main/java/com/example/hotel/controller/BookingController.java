@@ -33,9 +33,9 @@ public class BookingController {
 
         // Lấy tổng số phòng dựa vào roomType
         int totalRooms = switch (roomType) {
-            case "DELUXE" -> 40;
+            case "DELUXE" -> 60;
             case "COUPLE" -> 50;
-            case "FAMILY" -> 60;
+            case "FAMILY" -> 40;
             default -> 0;
         };
 
