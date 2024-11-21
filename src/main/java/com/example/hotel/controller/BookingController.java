@@ -58,7 +58,8 @@ public class BookingController {
         booking.setNumberOfGuests(guests);
 
         bookingService.saveBooking(booking);
-        return "redirect:/";
+        model.addAttribute("successMessage", "Đặt phòng thành công!");
+        return "booking-success";
     }
 
 

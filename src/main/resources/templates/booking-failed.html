@@ -1,12 +1,39 @@
-<!-- booking-failed.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Phòng đã hết</title>
+  <meta http-equiv="refresh" content="5;url=/" /> <!-- Tự động chuyển về trang chủ sau 5 giây -->
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      color: red;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-<h1>Rất tiếc, phòng đã hết!</h1>
-<p>Hiện không còn phòng trống cho loại phòng này.</p>
-<a href="/" th:href="@{/}">Quay lại trang chủ</a> <!-- Link về trang chủ -->
+<div class="container">
+  <h1>Rất tiếc, phòng đã hết!</h1>
+  <p>Hiện không còn phòng trống cho loại phòng này.</p>
+  <p>Bạn sẽ được chuyển về trang chủ trong vòng 5 giây...</p>
+</div>
+<script>
+  // Thêm logic nếu muốn tùy chỉnh hành vi hoặc sự kiện trước khi chuyển hướng
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 5000); // Chuyển hướng sau 5000ms (5 giây)
+</script>
 </body>
 </html>
