@@ -13,17 +13,18 @@
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>ID</th>
+      <th>Số phòng</th>
       <th>Ngày nhận phòng</th>
       <th>Ngày trả phòng</th>
       <th>Loại phòng</th>
       <th>Số người</th>
       <th>Hủy đặt</th>
+
     </tr>
     </thead>
     <tbody>
     <tr th:each="booking : ${bookings}">
-      <td th:text="${booking.id}"></td>
+      <td th:text="${booking.roomNumber}"></td>
       <td th:text="${booking.checkInDate}"></td>
       <td th:text="${booking.checkOutDate}"></td>
       <td th:text="${booking.roomType}"></td>

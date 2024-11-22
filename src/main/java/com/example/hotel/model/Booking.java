@@ -17,11 +17,20 @@ public class Booking {
     private LocalDate checkOutDate;
     private String roomType; // Thay đổi tên từ rooms thành roomType
     private int numberOfGuests;  // Số lượng khách
+    private String roomNumber; // Số phòng, ví dụ: "500A"
+
 
     // Các getter và setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 

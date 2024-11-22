@@ -46,6 +46,7 @@
   <table>
     <tr>
       <th>ID</th>
+      <th>Số phòng</th>
       <th>Tên người đặt</th>
       <th>Ngày nhận phòng</th>
       <th>Ngày trả phòng</th>
@@ -55,6 +56,7 @@
     </tr>
     <tr th:each="booking : ${bookings}">
       <td th:text="${booking.id}"></td>
+      <td th:text="${booking.roomNumber}"></td>
       <td th:text="${booking.username}"></td>
       <td th:text="${booking.checkInDate}"></td>
       <td th:text="${booking.checkOutDate}"></td>

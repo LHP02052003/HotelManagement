@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chọn Dịch Vụ Bổ Sung</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f3f4f6; }
+    .container { max-width: 500px; margin-top: 50px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    h2 { text-align: center; color: #333; }
+    .form-check { margin-bottom: 10px; }
+    .btn-submit { width: 100%; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Chọn Dịch Vụ Bổ Sung</h2>
+
+  <form id="serviceForm" action="/service-request/create" method="POST">
+    <input type="hidden" name="roomNumber" value="123"> <!-- Số phòng được lấy từ hệ thống -->
+    <input type="hidden" name="roomType" value="DELUXE"> <!-- Loại phòng (ví dụ: DELUXE) -->
+
+    <div class="form-group">
+      <label>Dịch vụ bổ sung</label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="serviceName" value="Gọi đồ ăn" id="serviceFood">
+        <label class="form-check-label" for="serviceFood">Gọi đồ ăn</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="serviceName" value="Gọi taxi" id="serviceTaxi">
+        <label class="form-check-label" for="serviceTaxi">Gọi taxi</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="serviceName" value="Dịch vụ massage" id="serviceMassage">
+        <label class="form-check-label" for="serviceMassage">Dịch vụ massage</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit">Gửi yêu cầu</button>
+  </form>
+  <a href="/" class="btn btn-secondary btn-sm mt-3">Quay lại</a>
+</div>
+</body>
+</html>

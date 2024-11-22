@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết Dịch Vụ</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2 class="mt-5">Chi Tiết Dịch Vụ Của Bạn</h2>
+  <a href="/customer/services" class="btn btn-primary mb-3">Quay về trang chọn dịch vụ</a>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Số Phòng</th>
+      <th>Kiểu phòng</th>
+      <th>Tên Khách</th>
+      <th>Dịch Vụ</th>
+      <th>Trạng Thái</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request : ${serviceRequests}">
+      <td th:text="${request.id}"></td>
+      <td th:text="${request.roomNumber}"></td> <!-- Hiển thị số phòng -->
+      <td th:text="${request.roomType}"></td> <!-- Hiển thị kiểu phòng -->
+      <td th:text="${request.username}"></td>
+      <td th:text="${request.serviceName}"></td>
+      <td th:text="${request.status}"></td>
+      <td>
+        <form th:action="@{/service-request/delete/{id}(id=${request.id})}" method="post">
+          <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

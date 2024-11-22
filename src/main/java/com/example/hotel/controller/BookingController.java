@@ -48,7 +48,7 @@ public class BookingController {
             model.addAttribute("soldOutMessage", "Loại phòng này đã hết. Vui lòng chọn loại phòng khác.");
             return "booking-failed"; // Tên trang hiển thị thông báo lỗi, ví dụ: booking-failed.html
         }
-
+        String roomNumber = bookingService.getNextRoomNumber(roomType);
         // Tiếp tục xử lý đặt phòng
         Booking booking = new Booking();
         booking.setUsername(username);
@@ -56,9 +56,10 @@ public class BookingController {
         booking.setCheckOutDate(LocalDate.parse(checkOutDate));
         booking.setRoomType(roomType);  // Lưu trữ tên loại phòng
         booking.setNumberOfGuests(guests);
+        booking.setRoomNumber(roomNumber);
 
         bookingService.saveBooking(booking);
-        model.addAttribute("successMessage", "Đặt phòng thành công!");
+        model.addAttribute("successMessage", "Đặt phòng thành công! Số phòng của bạn là "  +  roomNumber);
         return "booking-success";
     }
 

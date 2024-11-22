@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh Sách Yêu Cầu Dịch Vụ</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2 class="mt-5">Danh Sách Yêu Cầu Dịch Vụ</h2>
+
+  <!-- Bảng hiển thị các yêu cầu dịch vụ -->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Số Phòng</th>
+      <th>Kiểu phòng</th>
+      <th>Khách Hàng</th>
+      <th>Tên Dịch Vụ</th>
+      <th>Trạng Thái</th>
+      <th>Chức Năng</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Lặp qua tất cả các yêu cầu dịch vụ -->
+    <tr th:each="request : ${serviceRequests}">
+      <td th:text="${request.id}"></td>
+      <td th:text="${request.roomNumber}"></td> <!-- Hiển thị số phòng -->
+      <td th:text="${request.roomType}"></td> <!-- Hiển thị kiểu phòng -->
+      <td th:text="${request.username}"></td> <!-- Hiển thị tên khách hàng -->
+      <td th:text="${request.serviceName}"></td> <!-- Hiển thị tên dịch vụ -->
+      <td th:text="${request.status}"></td> <!-- Hiển thị trạng thái -->
+      <td>
+        <!-- Cập nhật trạng thái yêu cầu dịch vụ -->
+        <form th:action="@{/service-request/update-status/{id}(id=${request.id})}" method="post">
+          <select name="status" required>
+            <option value="Pending" th:selected="${request.status == 'Pending'}">Chờ xử lý</option>
+            <option value="In Progress" th:selected="${request.status == 'In Progress'}">Đang xử lý</option>
+            <option value="Completed" th:selected="${request.status == 'Completed'}">Hoàn thành</option>
+          </select>
+          <button type="submit" class="btn btn-success">Cập nhật</button>
+        </form>
+        <!-- Xóa yêu cầu dịch vụ -->
+        <form th:action="@{/service-request/delete/{id}(id=${request.id})}" method="post" style="margin-top: 5px;">
+          <button type="submit" class="btn btn-danger">Xóa</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
