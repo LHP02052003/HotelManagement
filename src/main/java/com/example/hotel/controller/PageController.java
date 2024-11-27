@@ -30,7 +30,9 @@ public class PageController {
     }
     // đường đẫn cho danh sách khách hàng
     @GetMapping("/customer/service-details")
-    public String customerServiceDetails() {
+    public String customerServiceDetails(Model model) {
+        List<ServiceRequest> serviceRequests = serviceRequestService.findAllRequests();
+        model.addAttribute("serviceRequests", serviceRequests);
         return "service-details"; // trả về file customer-services.html
     }
 }

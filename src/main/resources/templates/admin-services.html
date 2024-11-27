@@ -14,7 +14,6 @@
   <table class="table">
     <thead>
     <tr>
-      <th>ID</th>
       <th>Số Phòng</th>
       <th>Kiểu phòng</th>
       <th>Khách Hàng</th>
@@ -26,7 +25,6 @@
     <tbody>
     <!-- Lặp qua tất cả các yêu cầu dịch vụ -->
     <tr th:each="request : ${serviceRequests}">
-      <td th:text="${request.id}"></td>
       <td th:text="${request.roomNumber}"></td> <!-- Hiển thị số phòng -->
       <td th:text="${request.roomType}"></td> <!-- Hiển thị kiểu phòng -->
       <td th:text="${request.username}"></td> <!-- Hiển thị tên khách hàng -->
