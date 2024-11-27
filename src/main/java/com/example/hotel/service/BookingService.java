@@ -4,9 +4,7 @@ import com.example.hotel.model.Booking;
 import com.example.hotel.repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BookingService {
@@ -38,39 +36,51 @@ public class BookingService {
         return bookingRepository.countByRoomType(roomType); // Cập nhật với kiểu String
     }
     public String getNextRoomNumber(String roomType) {
-        int startFloor = 500; // Starting room number (500)
-        int roomsPerFloor = 10; // 10 rooms per floor
-        int maxFloor = 1909; // Maximum room number
+        int startFloor = 5; // Tầng bắt đầu
+        int roomsPerFloor = 10; // Số phòng mỗi tầng
+        int maxFloor = 15; // Tầng tối đa
 
-        // Get the list of all bookings for this room type
+        // Ký tự đại diện loại phòng
+        String roomSuffix = switch (roomType) {
+            case "DELUXE" -> "S";
+            case "COUPLE" -> "D";
+            case "FAMILY" -> "F";
+            default -> throw new IllegalArgumentException("Loại phòng không hợp lệ: " + roomType);
+        };
+
+        // Lấy danh sách các phòng đã được đặt
         List<Booking> bookings = bookingRepository.findAll();
 
-        // Create a set to store the base room numbers that have been booked (without suffix)
-        Set<Integer> usedRooms = new HashSet<>();
-
-        // Loop through all bookings and record the room numbers that have been used
+        // Tập hợp các phòng đã được sử dụng
+        Set<String> usedRooms = new HashSet<>();
+        Map<Integer, Integer> floorRoomCount = new HashMap<>();
         for (Booking booking : bookings) {
-            // Extract the base room number (without any suffix like "A")
-            int roomBaseNumber = Integer.parseInt(booking.getRoomNumber().substring(0, booking.getRoomNumber().length()));
-            usedRooms.add(roomBaseNumber);
+            String roomNumber = booking.getRoomNumber();
+            usedRooms.add(roomNumber);
+
+            // Lấy số tầng từ số phòng
+            int floor = Integer.parseInt(roomNumber.substring(0, roomNumber.length() - 3));
+            floorRoomCount.put(floor, floorRoomCount.getOrDefault(floor, 0) + 1);
         }
 
-        // Loop from 500 to 1909, and assign the next available room number
-        for (int roomNumber = startFloor; roomNumber <= maxFloor; roomNumber++) {
-            // Check if this room number is already booked or was previously used and then deleted
-            if (!usedRooms.contains(roomNumber)) {
-                // If not booked or deleted, return this room number as the next available one
-                return String.valueOf(roomNumber);
-            }
+        // Duyệt qua các tầng từ tầng 5 đến tầng 15
+        for (int floor = startFloor; floor <= maxFloor; floor++) {
+            int currentFloorCount = floorRoomCount.getOrDefault(floor, 0);
 
-            // If the room number ends with "09", the next room should be on the next floor
-            if (roomNumber % 100 == 9) {
-                roomNumber = (roomNumber / 100) * 100 + 99; // Move to the next floor (e.g., 509 -> 600)
+            // Nếu tầng hiện tại chưa đủ 10 phòng, tiếp tục kiểm tra
+            if (currentFloorCount < roomsPerFloor) {
+                // Tìm phòng theo thứ tự từ 00 đến 09
+                for (int room = 0; room < roomsPerFloor; room++) {
+                    String roomNumber = String.format("%d%02d%s", floor, room, roomSuffix);
+                    if (!usedRooms.contains(roomNumber)) {
+                        return roomNumber; // Trả về số phòng đầu tiên trống
+                    }
+                }
             }
         }
 
-        // If no available rooms, throw an exception or handle it
-        throw new IllegalStateException("No available rooms.");
+        // Nếu không còn phòng trống
+        throw new IllegalStateException("Không còn phòng trống cho loại: " + roomType);
     }
 
 

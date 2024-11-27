@@ -22,16 +22,16 @@ public class BookingController {
     @PostMapping("/create")
     public String createBooking(@RequestParam String checkInDate,
                                 @RequestParam String checkOutDate,
-                                @RequestParam String roomType,  // Thay đổi thành String
+                                @RequestParam String roomType, // Loại phòng
                                 @RequestParam int guests,
                                 HttpSession session,
                                 Model model) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
-            return "redirect:/login"; // Nếu chưa đăng nhập, chuyển về trang đăng nhập
+            return "redirect:/login"; // Chuyển về trang đăng nhập nếu chưa đăng nhập
         }
 
-        // Lấy tổng số phòng dựa vào roomType
+        // Kiểm tra phòng còn trống
         int totalRooms = switch (roomType) {
             case "DELUXE" -> 60;
             case "COUPLE" -> 50;
@@ -39,29 +39,35 @@ public class BookingController {
             default -> 0;
         };
 
-        // Đếm số phòng đã được đặt
         long bookedRooms = bookingService.countRoomsByType(roomType);
-
-        // Kiểm tra nếu hết phòng
-        if (totalRooms - (int) bookedRooms <= 0) {
-            // Nếu không còn phòng, hiển thị thông báo
+        if (totalRooms - bookedRooms <= 0) {
             model.addAttribute("soldOutMessage", "Loại phòng này đã hết. Vui lòng chọn loại phòng khác.");
-            return "booking-failed"; // Tên trang hiển thị thông báo lỗi, ví dụ: booking-failed.html
+            return "booking-failed";
         }
-        String roomNumber = bookingService.getNextRoomNumber(roomType);
-        // Tiếp tục xử lý đặt phòng
+
+        // Lấy số phòng tiếp theo
+        String roomNumber;
+        try {
+            roomNumber = bookingService.getNextRoomNumber(roomType);
+        } catch (IllegalStateException e) {
+            model.addAttribute("soldOutMessage", e.getMessage());
+            return "booking-failed";
+        }
+
+        // Tạo booking mới
         Booking booking = new Booking();
         booking.setUsername(username);
         booking.setCheckInDate(LocalDate.parse(checkInDate));
         booking.setCheckOutDate(LocalDate.parse(checkOutDate));
-        booking.setRoomType(roomType);  // Lưu trữ tên loại phòng
+        booking.setRoomType(roomType);
         booking.setNumberOfGuests(guests);
         booking.setRoomNumber(roomNumber);
 
         bookingService.saveBooking(booking);
-        model.addAttribute("successMessage", "Đặt phòng thành công! Số phòng của bạn là "  +  roomNumber);
+        model.addAttribute("successMessage", "Đặt phòng thành công! Số phòng của bạn là " + roomNumber);
         return "booking-success";
     }
+
 
 
 
