@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh Sách Nhân viên</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2 class="mt-5">Danh Sách Nhân viên</h2>
+  <!-- Hiển thị thông báo nếu có -->
+  <div th:if="${message}" id="successMessage" class="alert alert-success">
+    <span th:text="${message}"></span>
+  </div>
+  <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
+  <div class="d-flex justify-content-end mb-3">
+    <a href="/employee/create" class="btn btn-success">Thêm mới nhân viên</a>
+  </div>
+  <!-- Bảng hiển thị các nhân viên -->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>IDNV</th>
+      <th>Tên nhân viên</th>
+      <th>Chức vụ</th>
+      <th>Phòng ban</th>
+      <th>Lương theo giờ (ĐV: VND/H)</th>
+      <th>Số giờ làm (ĐV: H/NGÀY)</th>
+      <th>Chấm công tính lương</th> <!-- Cột mới -->
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Lặp qua tất cả các nhân viên -->
+    <tr th:each="employee : ${employees}">
+      <td th:text="${employee.id}"></td>
+      <td th:text="${employee.name}"></td> <!-- Hiển thị tên nhân viên -->
+      <td th:text="${employee.position}"></td> <!-- Hiển thị chức vụ -->
+      <td th:text="${employee.department}"></td> <!-- Hiển thị phòng ban -->
+      <td th:text="${employee.salary}"></td> <!-- Hiển thị lương -->
+      <td th:text="${employee.workingHours}"></td> <!-- Hiển thị giờ làm việc -->
+      <td>
+        <!-- Ghi nhận chấm công -->
+        <form th:action="@{/employee/attendance/{id}(id=${employee.id})}" method="post" class="mb-2">
+          <input type="date" name="date" required class="form-control">
+          <input type="number" name="workingHours" placeholder="Giờ làm việc" required class="form-control mt-2">
+          <button type="submit" class="btn btn-success mt-2">Ghi nhận chấm công</button>
+        </form>
+      </td>
+      <!-- Cột Chức Năng -->
+      <td>
+        <div class="d-flex">
+          <!-- Cập nhật thông tin nhân viên -->
+          <form th:action="@{/employee/update/{id}(id=${employee.id})}" method="get" class="mr-2">
+            <button type="submit" class="btn btn-info">Sửa</button>
+          </form>
+
+          <!-- Xóa nhân viên -->
+          <form th:action="@{/employee/delete/{id}(id=${employee.id})}" method="post">
+            <button type="submit" class="btn btn-danger">Xóa</button>
+          </form>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
+<script>
+  // Kiểm tra nếu thông báo tồn tại và ẩn sau 3 giây
+  var message = document.getElementById('successMessage');
+  console.log("Message element:", message); // Debug xem phần tử có tồn tại
+  if (message) {
+    setTimeout(function() {
+      console.log("Hiding message..."); // Debug khi hàm ẩn được gọi
+      message.style.display = 'none'; // Ẩn thông báo
+    }, 3000); // Đặt thời gian 3 giây
+  }
+</script>

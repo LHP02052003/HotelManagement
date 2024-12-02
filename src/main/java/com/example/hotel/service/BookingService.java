@@ -4,6 +4,7 @@ import com.example.hotel.model.Booking;
 import com.example.hotel.repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -84,5 +85,14 @@ public class BookingService {
     }
 
 
+    //tính tổng boking theo khoang thoi gian
+    public double calculateTotalRevenue(LocalDate startDate, LocalDate endDate) {
+        List<Booking> bookings = bookingRepository.findByCheckInDateBetween(startDate, endDate);
+
+        // Tính tổng giá từ các booking
+        return bookings.stream()
+                .mapToDouble(Booking::getPrice) // Lấy giá từ từng Booking
+                .sum();
+    }
 
 }

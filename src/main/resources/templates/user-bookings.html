@@ -18,8 +18,8 @@
       <th>Ngày trả phòng</th>
       <th>Loại phòng</th>
       <th>Số người</th>
+      <th>Giá phòng (TVND)</th> <!-- Cột hiển thị giá phòng -->
       <th>Hủy đặt</th>
-
     </tr>
     </thead>
     <tbody>
@@ -29,6 +29,7 @@
       <td th:text="${booking.checkOutDate}"></td>
       <td th:text="${booking.roomType}"></td>
       <td th:text="${booking.numberOfGuests}"></td>
+      <td th:text="${booking.price}"></td> <!-- Hiển thị giá phòng -->
       <td>
         <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
           <button type="submit" class="btn btn-danger">Hủy</button>

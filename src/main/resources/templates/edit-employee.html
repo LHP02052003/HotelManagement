@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật thông tin nhân viên</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Cập nhật thông tin nhân viên</h2>
+
+    <!-- Form sửa thông tin nhân viên -->
+    <form th:action="@{/employee/update/{id}(id=${employee.id})}" method="post">
+        <div class="form-group">
+            <label for="name">Tên nhân viên:</label>
+            <input type="text" id="name" name="name" class="form-control" th:value="${employee.name}" required>
+        </div>
+        <div class="form-group">
+            <label for="position">Chức vụ:</label>
+            <input type="text" id="position" name="position" class="form-control" th:value="${employee.position}" required>
+        </div>
+        <div class="form-group">
+            <label for="department">Phòng ban:</label>
+            <input type="text" id="department" name="department" class="form-control" th:value="${employee.department}" required>
+        </div>
+        <div class="form-group">
+            <label for="salary">Lương:</label>
+            <input type="number" id="salary" name="salary" class="form-control" th:value="${employee.salary}" required>
+        </div>
+        <div class="form-group">
+            <label for="workingHours">Giờ làm việc:</label>
+            <input type="number" id="workingHours" name="workingHours" class="form-control" th:value="${employee.workingHours}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+    </form>
+</div>
+</body>
+</html>

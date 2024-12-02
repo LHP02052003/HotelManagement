@@ -238,6 +238,21 @@
         </ul>
       </div>
     </div>
+    <div class="announcements" th:if="${announcements != null && !announcements.isEmpty()}">
+      <h3>Thông báo</h3>
+      <ul>
+        <li th:each="announcement : ${announcements}" th:id="'announcement-' + ${announcement.id}">
+          <p th:text="${announcement.content}"></p> <!-- Nội dung thông báo -->
+          <button onclick="hideAnnouncement(this)">x</button> <!-- Nút tắt -->
+        </li>
+      </ul>
+    </div>
+
+
+
+
+
+
   </nav>
   <nav id="primary-header" class="navbar navbar-expand-lg py-4">
     <div class="container-fluid padding-side">
@@ -278,26 +293,37 @@
               <li class="nav-item px-3">
                 <a class="nav-link p-0" th:href="${session.role != null && session.role == 'ADMIN' ? '/admin/services' : '/customer/services'}">Services</a> <!-- Điều hướng đến dịch vụ của admin hoặc khách hàng -->
               </li>
-              <li class="nav-item px-3">
-                <a class="nav-link p-0" href="/">Blog</a>
+              <li class="nav-item px-3" th:if="${session.role != null && session.role == 'ADMIN'}">
+                <a class="nav-link p-0" th:href="@{/admin/finaces}">Finance</a>
+              </li>
+              <li class="nav-item px-3" th:if="${session.role != null && session.role == 'ADMIN'}">
+                <a class="nav-link p-0" th:href="@{/admin/employees}">Employee</a>
               </li>
               <li class="nav-item px-3">
                 <a class="nav-link p-0" href="/">Contact</a>
+              </li>
+              <li class="nav-item px-3">
+                <a class="nav-link p-0" href="map">Map</a>
               </li>
               <li class="nav-item px-3 dropdown">
                 <a class="nav-link p-0 dropdown-toggle text-center" data-bs-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">Pages</a>
                 <ul class="dropdown-menu dropdown-menu-end animate slide mt-3 border-0 shadow">
                   <li><a href="/" class="dropdown-item">About</a></li>
-                  <li><a href="/" class="dropdown-item">Room</a></li>
                   <li><a href="/" class="dropdown-item">Room-Details</a></li>
-                  <li><a href="/" class="dropdown-item">Blog</a></li>
+
+                  <li th:if="${session.role != null && session.role == 'ADMIN'}"><a class="dropdown-item" aria-current="page" href="/admin/salarys">Salarys</a></li>
+                  <li th:if="${session.role != null && session.role == 'ADMIN'}"><a class="dropdown-item" aria-current="page" href="/admin/employees">Employee</a></li>
+                  <li th:if="${session.role != null && session.role == 'ADMIN'}"><a class ="dropdown-item" aria-current="page" href="/admin/timsheets">Timsheet</a></li>
                   <li><a href="/" class="dropdown-item">Support</a></li>
                   <li><a th:href="${session.role != null && session.role == 'ADMIN' ? '/admin/services' : '/customer/services'}" class="dropdown-item">Services</a></li>
                   <li th:if="${session.role != null && session.role == 'CUSTOMER'}">
                     <a th:href="@{/customer/service-details}" class="dropdown-item">Service Details</a>
                   </li>
                   <li><a class="dropdown-item" aria-current="page" href="/booking/booking-page">Booking</a></li>
+                  <li th:if="${session.role != null && session.role == 'ADMIN'}">
+                    <a class="dropdown-item" href="/admin/announcements">Notification Manage</a>
+                  </li>
                   <li><a href="/" class="dropdown-item">Gallery</a></li>
                   <li><a href="/" class="dropdown-item">Contact</a></li>
                   <li><a href="/" class="dropdown-item">Team</a></li>
@@ -309,12 +335,19 @@
               <!-- Đăng nhập / Đăng ký -->
               <li class="nav-item px-3">
                 <div th:if="${session.username != null}" class="d-flex align-items-center">
-                  <a class="nav-link px-3" th:text="${session.username}"></a>
+                  <a th:if="${session.role != null && session.role == 'ADMIN'}"
+                     th:href="@{/admin}"
+                     class="nav-link px-3"
+                     th:text="${session.username}"></a>
+                  <a th:if="${session.role == null || session.role != 'ADMIN'}"
+                     th:href="@{/profile}"
+                     class="nav-link px-3"
+                     th:text="${session.username}"></a>
                   <a href="/api/auth/logout" class="nav-link px-3">Đăng xuất</a>
                 </div>
                 <div th:if="${session.username == null}" class="d-flex align-items-center">
                   <a href="/login" class="nav-link px-3">Đăng nhập</a>
-                  <a href="/register" class="nav-link px-3">Đăng ký</a>
+                    <a href="/register" class="nav-link px-3">Đăng ký</a>
                 </div>
               </li>
             </ul>
@@ -335,6 +368,7 @@
         </div>
       </div>
     </div>
+
   </nav>
 </header>
 
@@ -1066,6 +1100,15 @@
   </div>
 </section>
 
+<script>
+  function hideAnnouncement(button) {
+  // Tìm phần tử cha (li) của nút tắt và ẩn nó
+  const announcementItem = button.parentElement;
+  announcementItem.style.display = 'none';
+
+  // (Tuỳ chọn) Có thể thêm logic gửi yêu cầu lên server để đánh dấu thông báo là "đã đọc" nếu cần
+  // Ví dụ: Gửi AJAX request để cập nhật trạng thái
+}</script>
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/plugins.js"></script>

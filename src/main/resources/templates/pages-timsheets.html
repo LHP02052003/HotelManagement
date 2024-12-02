@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chấm Công nhân viên </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Chấm Công nhân viên</h2>
+    <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
+    <!-- Bảng hiển thị các bản ghi làm việc -->
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-light">
+        <tr>
+            <th>ID</th>
+            <th>IDNV</th>
+            <th>Tên Nhân Viên</th>
+            <th>Ngày Làm Việc</th>
+            <th>Số Giờ Làm Việc (ĐV: H)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Lặp qua danh sách các bản ghi Dates -->
+        <tr th:each="date : ${dates}">
+            <td th:text="${date.id}"></td>
+            <td th:text="${date.employee.id}"></td> <!-- Hiển thị tên nhân viên -->
+            <td th:text="${date.name}"></td>
+            <td th:text="${date.date}"></td>
+            <td th:text="${date.workingHours}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

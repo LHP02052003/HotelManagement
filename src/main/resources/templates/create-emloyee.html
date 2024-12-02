@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm mới nhân viên</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Thêm mới nhân viên</h2>
+
+    <!-- Form thêm mới nhân viên -->
+    <form th:action="@{/employee/save}" method="post">
+        <div class="form-group">
+            <label for="name">Tên nhân viên:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="position">Chức vụ:</label>
+            <input type="text" id="position" name="position" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="department">Phòng ban:</label>
+            <input type="text" id="department" name="department" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="salary">Lương:</label>
+            <input type="number" id="salary" name="salary" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="workingHours">Giờ làm việc:</label>
+            <input type="number" id="workingHours" name="workingHours" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm mới</button>
+    </form>
+
+    <!-- Quay lại danh sách nhân viên -->
+    <a href="/employee/all" class="btn btn-secondary mt-3">Quay lại danh sách nhân viên</a>
+</div>
+</body>
+</html>

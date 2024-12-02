@@ -3,8 +3,11 @@
 <head>
   <title>Đăng ký</title>
   <style>
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
     .success-message {
-      display: none;
       color: green;
       margin-top: 10px;
     }
@@ -19,8 +22,8 @@
   <button type="submit">Đăng ký</button>
 </form>
 
-<!-- Thông báo thành công -->
-<p class="success-message" id="successMessage">Đăng ký thành công! Chuyển hướng đến trang đăng nhập...</p>
+<!-- Thông báo -->
+<p id="messageContainer" class=""></p>
 
 <!-- Nút chuyển đến trang đăng nhập -->
 <p>Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
@@ -30,28 +33,33 @@
 
 <script>
   document.getElementById("registerForm").onsubmit = function(event) {
-    event.preventDefault();  // Ngăn gửi form theo cách thông thường
+    event.preventDefault();
     var formData = new FormData(this);
+    var messageContainer = document.getElementById("messageContainer");
 
     fetch(this.action, {
       method: "POST",
-      body: new URLSearchParams(formData)  // Chuyển dữ liệu thành application/x-www-form-urlencoded
+      body: new URLSearchParams(formData)
     })
             .then(response => {
-              if (response.ok) {
-                // Hiển thị thông báo đăng ký thành công
-                document.getElementById("successMessage").style.display = "block";
+              return response.text().then(text => ({
+                ok: response.ok,
+                text: text
+              }));
+            })
+            .then(({ok, text}) => {
+              if (ok) {
+                messageContainer.textContent = "Đăng ký thành công!";
+                messageContainer.className = "success-message";
 
-                // Chuyển hướng đến trang đăng nhập sau 2 giây
-                setTimeout(() => {
-                  window.location.href = "/login";
-                }, 2000);
               } else {
-                alert("Đăng ký không thành công. Vui lòng thử lại.");
+                messageContainer.textContent = text || "Đăng ký không thành công";
+                messageContainer.className = "error-message";
               }
             })
             .catch(error => {
-              console.error("Lỗi:", error);
+              messageContainer.textContent = "Lỗi: " + error.message;
+              messageContainer.className = "error-message";
             });
   };
 </script>

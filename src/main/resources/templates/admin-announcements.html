@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="container mt-5">
+  <h2>Quản lý thông báo</h2>
+  <form action="/admin/announcements/create" method="post" class="mb-4">
+    <div class="form-group">
+      <label for="title">Tiêu đề</label>
+      <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+    <div class="form-group">
+      <label for="content">Nội dung</label>
+      <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Tạo thông báo</button>
+  </form>
+  <h4>Danh sách thông báo</h4>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tiêu đề</th>
+      <th>Nội dung</th>
+      <th>Trạng thái</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="announcement : ${announcements}">
+      <td th:text="${announcement.id}"></td>
+      <td th:text="${announcement.title}"></td>
+      <td th:text="${announcement.content}"></td>
+      <td th:text="${announcement.isActive ? 'Hiển thị' : 'Ẩn'}"></td>
+      <td>
+        <form th:action="@{/admin/announcements/delete/{id}(id=${announcement.id})}" method="post">
+          <button type="submit" class="btn btn-danger">Xóa</button>
+        </form>
+      </td>
+    </tr>
+    <tr th:if="${announcements == null || announcements.isEmpty()}">
+      <td colspan="5" class="text-center">Không có thông báo nào</td>
+    </tr>
+    </tbody>
+    <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
+  </table>
+</div>
+</html>

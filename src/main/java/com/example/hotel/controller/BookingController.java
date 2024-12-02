@@ -53,7 +53,24 @@ public class BookingController {
             model.addAttribute("soldOutMessage", e.getMessage());
             return "booking-failed";
         }
+        double roomPricePerNight = 0;
+        switch (roomType) {
+            case "DELUXE":
+                roomPricePerNight = 11.5; // Giá phòng DELUXE ( đơn vị triệu vnđ )
+                break;
+            case "COUPLE":
+                roomPricePerNight = 9.0; // Giá phòng COUPLE  ( đơn vị triệu vnđ )
+                break;
+            case "FAMILY":
+                roomPricePerNight = 7.0; // Giá phòng FAMILY  ( đơn vị triệu vnđ )
+                break;
+        }
 
+        // Tính số ngày ở
+        long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
+
+        // Tính tổng giá phòng
+        double totalPrice = roomPricePerNight * daysBetween; // Giá phòng x Số ngày
         // Tạo booking mới
         Booking booking = new Booking();
         booking.setUsername(username);
@@ -62,6 +79,7 @@ public class BookingController {
         booking.setRoomType(roomType);
         booking.setNumberOfGuests(guests);
         booking.setRoomNumber(roomNumber);
+        booking.setPrice(totalPrice);
 
         bookingService.saveBooking(booking);
         model.addAttribute("successMessage", "Đặt phòng thành công! Số phòng của bạn là " + roomNumber);

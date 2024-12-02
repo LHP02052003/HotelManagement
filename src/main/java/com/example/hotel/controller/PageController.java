@@ -35,5 +35,9 @@ public class PageController {
         model.addAttribute("serviceRequests", serviceRequests);
         return "service-details"; // trả về file customer-services.html
     }
+    @GetMapping("/map")
+    public String pasmap() {
+        return "ggmap";
+    }
 }
 

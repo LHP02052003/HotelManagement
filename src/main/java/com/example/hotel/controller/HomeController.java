@@ -1,11 +1,13 @@
 package com.example.hotel.controller;
 
+import com.example.hotel.model.Announcement;
 import com.example.hotel.model.Booking;
+import com.example.hotel.service.AnnouncementService;
 import com.example.hotel.service.BookingService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -13,14 +15,20 @@ import java.util.List;
 public class HomeController {
 
     private final BookingService bookingService;
+    private final AnnouncementService announcementService; // Thêm service để lấy thông báo
 
     // Constructor injection for BookingService
-    public HomeController(BookingService bookingService) {
+    public HomeController(BookingService bookingService, AnnouncementService announcementService) {
         this.bookingService = bookingService;
+        this.announcementService = announcementService;
     }
 
     @GetMapping("/")
-    public String homePage(HttpSession session) {
+    public String homePage(HttpSession session, Model model)
+    {
+        // Lấy danh sách các thông báo đang kích hoạt
+        List<Announcement> announcements = announcementService.getActiveAnnouncements();
+        model.addAttribute("announcements", announcements);
         return "index";
     }
 

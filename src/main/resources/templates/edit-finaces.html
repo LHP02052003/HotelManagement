@@ -1,0 +1,30 @@
+!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chọn Tháng và Năm</title>
+    <link rel="stylesheet" href="/path/to/your/css/style.css">
+</head>
+<body>
+<form action="/admin/finaces/month" method="get">
+    <label for="month">Chọn tháng:</label>
+    <select id="month" name="month">
+        <option th:each="m : ${#numbers.sequence(1, 12)}"
+                th:value="${m}"
+                th:text="'Tháng ' + ${m}"
+                th:selected="${m == selectedMonth}">
+        </option>
+    </select>
+
+    <label for="year">Chọn năm:</label>
+    <select id="year" name="year">
+        <option th:each="y : ${#numbers.sequence(2020, 2030)}"
+                th:value="${y}"
+                th:text="${y}"
+                th:selected="${y == selectedYear}">
+        </option>
+    </select>
+
+    <button type="submit" class="btn btn-primary mb-3">Xem doanh thu</button>
+</form>
+</body>
+</html>

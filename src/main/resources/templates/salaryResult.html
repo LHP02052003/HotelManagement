@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lương Nhân Viên</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Lương Nhân Viên</h1>
+    <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
+    <!-- Form nhập tháng và năm -->
+    <form action="/admin/salarys/filter" method="get">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="month" class="form-label">Tháng</label>
+                <input type="number" id="month" name="month" class="form-control" min="1" max="12" th:value="${currentMonth}" required>
+            </div>
+            <div class="col-md-4">
+                <label for="year" class="form-label">Năm</label>
+                <input type="number" id="year" name="year" class="form-control" min="2000" th:value="${currentYear}" required>
+            </div>
+            <div class="col-md-4 align-self-end">
+                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+    <!-- Hiển thị thông báo nếu không có dữ liệu -->
+    <div th:if="${message != null}" class="alert alert-warning text-center mt-4">
+        <p th:text="${message}"></p>
+    </div>
+
+    <!-- Hiển thị bảng dữ liệu -->
+    <table th:if="${salaryReports != null && !salaryReports.isEmpty()}"
+           class="table table-bordered table-striped mt-4">
+        <thead>
+        <tr>
+            <th>IDNV</th>
+            <th>Tên Nhân Viên</th>
+            <th>Lương Theo Giờ (DV: VND)</th>
+            <th>Năm</th>
+            <th>Tháng</th>
+            <th>Tổng Giờ Làm</th>
+            <th>Tổng Lương (DV: VND)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report : ${salaryReports}">
+            <td th:text="${report.employeeId}"></td>
+            <td th:text="${report.employeeName}"></td>
+            <td th:text="${report.hourlySalary}"></td>
+            <td th:text="${report.year}"></td>
+            <td th:text="${report.month}"></td>
+            <td th:text="${report.totalWorkingHours}"></td>
+            <td th:text="${report.totalSalary}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

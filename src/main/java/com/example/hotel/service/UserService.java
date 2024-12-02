@@ -3,11 +3,11 @@ package com.example.hotel.service;
 
 import com.example.hotel.model.User;
 import com.example.hotel.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-
 
 
 @Service
@@ -20,10 +20,15 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Transactional
     public User registerUser(User user) {
+        // Kiểm tra username một cách chặt chẽ hơn
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Tên người dùng đã tồn tại!");
+        }
+        // Đặt vai trò mặc định là CUSTOMER
         user.setRole("CUSTOMER");
-        return userRepository.save(user);
+        return userRepository.save(user); // Lưu người dùng mới vào DB
     }
 
     @PostConstruct
@@ -40,5 +45,25 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);  // Tìm người dùng theo tên
+    }
+    @Transactional
+    public boolean usernameExists(String username) {
+        // Kiểm tra xem tên người dùng đã tồn tại trong cơ sở dữ liệu hay chưa
+        return userRepository.existsByUsername(username);  // Đảm bảo đúng logic trong hàm này
+    }
+
+
+
+    public User updateUser(User updatedUser, String username) {
+        User existingUser = userRepository.findByUsername(username).orElse(null);
+        if (existingUser != null) {
+            existingUser.setFullName(updatedUser.getFullName());
+            existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
+            existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setAddress(updatedUser.getAddress());
+            return userRepository.save(existingUser); // Lưu thay đổi vào cơ sở dữ liệu
+        }
+        return null;
     }
 }

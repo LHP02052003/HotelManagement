@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống kê doanh thu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .dashboard-item {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashboard-content {
+            flex: 1;
+        }
+        .amount {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .btn-detail {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .btn-detail:hover {
+            background-color: #0056b3;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between; /* Đảm bảo các phần tử cách đều nhau */
+            gap: 20px; /* Khoảng cách giữa các cột */
+            margin-top: 20px; /* Lề phía trên nếu cần */
+        }
+
+        .col-md-4 {
+            flex: 1; /* Các cột sẽ chiếm đều không gian */
+            display: flex; /* Sử dụng flexbox để dễ dàng căn chỉnh */
+            flex-direction: column; /* Các phần tử con sẽ được xếp dọc */
+            box-sizing: border-box; /* Đảm bảo tính toán chiều rộng đúng */
+        }
+
+        .dashboard-item {
+            flex-grow: 1; /* Đảm bảo các item chiếm toàn bộ chiều cao có sẵn */
+            padding: 20px;
+            margin-bottom: 20px; /* Khoảng cách dưới các item */
+            display: flex;
+            flex-direction: column; /* Xếp các phần tử con dọc trong item */
+        }
+
+        .dashboard-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Đảm bảo nội dung trong item được căn chỉnh hợp lý */
+            height: 100%; /* Chiếm toàn bộ chiều cao */
+        }
+        .dashboard-item p {
+            text-align: center; /* Căn giữa nội dung trong thẻ p */
+            margin: 10px 0; /* Khoảng cách trên và dưới */
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Thống kê doanh thu phòng</h1>
+    <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
+    <div class="row">
+        <!-- Tổng đơn hàng -->
+        <div class="col-md-4">
+            <div class="dashboard-item" style="border-color: #c97629;">
+                <div class="dashboard-content">
+                    <p class="amount" style="color: #c97629;">Tổng: <span th:text="${totalRevenuemonth}"></span> TVND</p>
+                    <p><span th:text="${startOfMonth} + ' -> ' + ${endOfMonth}"></span></p>
+                    <form action="/admin/finaces/month" method="get">
+                        <label for="month">Chọn tháng:</label>
+                        <select id="month" name="month">
+                            <option value="1" th:selected="${selectedmonth == 1}">1</option>
+                            <option value="2" th:selected="${selectedmonth == 2}">2</option>
+                            <option value="3" th:selected="${selectedmonth == 3}">3</option>
+                            <option value="4" th:selected="${selectedmonth == 4}">4</option>
+                            <option value="5" th:selected="${selectedmonth == 5}">5</option>
+                            <option value="6" th:selected="${selectedmonth == 6}">6</option>
+                            <option value="7" th:selected="${selectedmonth == 7}">7</option>
+                            <option value="8" th:selected="${selectedmonth == 8}">8</option>
+                            <option value="9" th:selected="${selectedmonth == 9}">9</option>
+                            <option value="10" th:selected="${selectedmonth == 10}">10</option>
+                            <option value="11" th:selected="${selectedmonth == 11}">11</option>
+                            <option value="12" th:selected="${selectedmonth == 12}">12</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary mb-3">Doanh thu tháng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Doanh thu theo năm -->
+        <div class="col-md-4">
+            <div class="dashboard-item" style="border-color: #3d8ac7;">
+                <div class="dashboard-content">
+                    <p class="amount" style="color: #3d8ac7;">Tổng: <span th:text="${totalRevenueyear}"></span> TVND</p>
+                    <p><span th:text="${startOfYear} + ' -> ' + ${endOfYear}"></span></p>
+                    <form action="/admin/finaces/year" method="get">
+                        <label for="year">Chọn năm:</label>
+                        <select id="year" name="year">
+                            <option value="2020" th:selected="${selectedYear == 2020}">2020</option>
+                            <option value="2021" th:selected="${selectedYear == 2021}">2021</option>
+                            <option value="2022" th:selected="${selectedYear == 2022}">2022</option>
+                            <option value="2023" th:selected="${selectedYear == 2023}">2023</option>
+                            <option value="2024" th:selected="${selectedYear == 2024}">2024</option>
+                            <option value="2025" th:selected="${selectedYear == 2025}">2025</option>
+                            <option value="2026" th:selected="${selectedYear == 2026}">2026</option>
+
+                            <!-- Thêm các năm theo yêu cầu -->
+                        </select>
+                        <button type="submit" class="btn btn-primary mb-3">Doanh thu năm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <h3>Lịch sử</h3>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Khách hàng</th>
+                    <th>Loại phòng</th>
+                    <th>Ngày nhận phòng</th>
+                    <th>Ngày trả phòng</th>
+                    <th>Số người đặt</th>
+                    <th>Giá</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${bookings}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.username}"></td>
+                    <td th:text="${order.roomType}"></td>
+                    <td th:text="${order.checkInDate}"></td>
+                    <td th:text="${order.checkOutDate}"></td>
+                    <td th:text="${order.numberOfGuests}"></td>
+                    <td th:text="${order.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+</script>
+</body>
+</html>
