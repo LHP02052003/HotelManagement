@@ -24,28 +24,34 @@
             this.passwordEncoder = passwordEncoder;
         }
 
+        @GetMapping("/check-username")
+        public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
+            boolean exists = userService.isUsernameExists(username);
+            return ResponseEntity.ok(exists);
+        }
+
         // Đăng ký tài khoản mới
         @PostMapping("/register")
-        public synchronized String register(@RequestParam String username,
-                                            @RequestParam String password,
-                                            RedirectAttributes redirectAttributes) {
+        public String register(@RequestParam String username,
+                               @RequestParam String password,
+                               RedirectAttributes redirectAttributes) {
             try {
+                if (userService.isUsernameExists(username)) {
+                    throw new IllegalArgumentException("Tên người dùng đã tồn tại");
+                }
                 User user = new User();
                 user.setUsername(username);
+
+                // Mã hóa mật khẩu trước khi lưu vào DB
                 String encodedPassword = passwordEncoder.encode(password);
                 user.setPassword(encodedPassword);
 
-                userService.registerUser(user);  // Đăng ký người dùng mới
+                userService.registerUser(user);  // Đăng ký người dùng
                 redirectAttributes.addFlashAttribute("message", "Đăng ký thành công!");
-                return "redirect:/login";  // Chuyển hướng sang trang đăng nhập
-            } catch (IllegalArgumentException e) {
-                // Nếu tên người dùng đã tồn tại
-                redirectAttributes.addFlashAttribute("error", e.getMessage());
-                return "redirect:/register";  // Quay lại trang đăng ký với thông báo lỗi
+                return "redirect:/login";
             } catch (Exception e) {
-                // Xử lý lỗi khác
-                redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi trong quá trình đăng ký: " + e.getMessage());
-                return "redirect:/register";  // Quay lại trang đăng ký khi có lỗi
+                redirectAttributes.addFlashAttribute("error", "Đăng ký thất bại!");
+                return "redirect:/register";
             }
         }
 

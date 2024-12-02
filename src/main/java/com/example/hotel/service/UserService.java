@@ -22,10 +22,6 @@ public class UserService {
     }
     @Transactional
     public User registerUser(User user) {
-        // Kiểm tra username một cách chặt chẽ hơn
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Tên người dùng đã tồn tại!");
-        }
         // Đặt vai trò mặc định là CUSTOMER
         user.setRole("CUSTOMER");
         return userRepository.save(user); // Lưu người dùng mới vào DB
@@ -46,10 +42,8 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);  // Tìm người dùng theo tên
     }
-    @Transactional
-    public boolean usernameExists(String username) {
-        // Kiểm tra xem tên người dùng đã tồn tại trong cơ sở dữ liệu hay chưa
-        return userRepository.existsByUsername(username);  // Đảm bảo đúng logic trong hàm này
+    public boolean isUsernameExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 
 
