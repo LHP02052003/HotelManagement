@@ -15,7 +15,7 @@
   </div>
   <a href="/" class="btn btn-primary mb-3">Quay về trang chủ</a>
   <div class="d-flex justify-content-end mb-3">
-    <a href="/employee/create" class="btn btn-success">Thêm mới nhân viên</a>
+    <a href="/admin/employees/create" class="btn btn-success">Thêm mới nhân viên</a>
   </div>
   <!-- Bảng hiển thị các nhân viên -->
   <table class="table">
@@ -41,7 +41,7 @@
       <td th:text="${employee.workingHours}"></td> <!-- Hiển thị giờ làm việc -->
       <td>
         <!-- Ghi nhận chấm công -->
-        <form th:action="@{/employee/attendance/{id}(id=${employee.id})}" method="post" class="mb-2">
+        <form th:action="@{/admin/employees/attendance/{id}(id=${employee.id})}" method="post" class="mb-2">
           <input type="date" name="date" required class="form-control">
           <input type="number" name="workingHours" placeholder="Giờ làm việc" required class="form-control mt-2">
           <button type="submit" class="btn btn-success mt-2">Ghi nhận chấm công</button>
@@ -51,12 +51,12 @@
       <td>
         <div class="d-flex">
           <!-- Cập nhật thông tin nhân viên -->
-          <form th:action="@{/employee/update/{id}(id=${employee.id})}" method="get" class="mr-2">
+          <form th:action="@{/admin/employees/update/{id}(id=${employee.id})}" method="get" class="mr-2">
             <button type="submit" class="btn btn-info">Sửa</button>
           </form>
 
           <!-- Xóa nhân viên -->
-          <form th:action="@{/employee/delete/{id}(id=${employee.id})}" method="post">
+          <form th:action="@{/admin/employees/delete/{id}(id=${employee.id})}" method="post">
             <button type="submit" class="btn btn-danger">Xóa</button>
           </form>
         </div>

@@ -11,7 +11,7 @@
     <h2 class="mt-5">Cập nhật thông tin nhân viên</h2>
 
     <!-- Form sửa thông tin nhân viên -->
-    <form th:action="@{/employee/update/{id}(id=${employee.id})}" method="post">
+    <form th:action="@{/admin/employees/update/{id}(id=${employee.id})}" method="post">
         <div class="form-group">
             <label for="name">Tên nhân viên:</label>
             <input type="text" id="name" name="name" class="form-control" th:value="${employee.name}" required>
