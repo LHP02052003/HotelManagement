@@ -1,27 +1,119 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #0066cc;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #004999;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .message a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .message a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: #0066cc;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            color: #004999;
+        }
+    </style>
 </head>
-<body>
-<h1>Đăng nhập</h1>
+<body  style="background-image: url(/images/slider-image.jpg); background-size: cover; background-repeat: no-repeat; height: 85vh; background-position: center;">
+<div class="container">
+    <h1>Đăng nhập</h1>
 
-<form id="loginForm" action="/api/auth/login" method="post">
-    <input type="text" name="username" placeholder="Tài khoản" required><br>
-    <input type="password" name="password" placeholder="Mật khẩu" required><br>
-    <button type="submit">Đăng nhập</button>
-</form>
+    <!-- Form đăng nhập -->
+    <form id="loginForm" action="/api/auth/login" method="post">
+        <input type="text" name="username" placeholder="Tài khoản" required>
+        <input type="password" name="password" placeholder="Mật khẩu" required>
+        <button type="submit" class="btn">Đăng nhập</button>
+    </form>
 
-<!-- Nút chuyển hướng đến trang đăng ký -->
-<p>Chưa có tài khoản? <a href="/register">Đăng ký ngay</a></p>
-
-<!-- Nút quay về trang chủ -->
-<button onclick="window.location.href='/'">Quay về Trang Chủ</button>
+    <!-- Liên kết -->
+    <div class="message">
+        <p>Chưa có tài khoản? <a href="/register">Đăng ký ngay</a></p>
+        <button onclick="window.location.href='/'">Quay về Trang Chủ</button>
+    </div>
+</div>
 
 <script>
     document.getElementById("loginForm").onsubmit = function(event) {
         event.preventDefault();  // Ngăn chặn việc gửi form thông thường
-        var formData = new FormData(this);
+        const formData = new FormData(this);
 
         fetch(this.action, {
             method: "POST",
