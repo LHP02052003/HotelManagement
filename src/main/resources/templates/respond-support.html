@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yêu cầu hỗ trợ</title>
+  <style>
+    /* Tạo kiểu cho trang phản hồi yêu cầu hỗ trợ */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    form {
+      width: 100%;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box; /* Đảm bảo kích thước không vượt quá container */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+      vertical-align: top; /* Căn chỉnh nội dung lên trên để phù hợp với textarea */
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    td form {
+      display: block; /* Đảm bảo mỗi form chiếm riêng một dòng trong ô */
+      width: 100%;
+      box-sizing: border-box; /* Đảm bảo form không vượt quá chiều rộng ô */
+    }
+
+    textarea {
+      width: 95%; /* Nhỏ hơn một chút so với ô để tránh tràn */
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical; /* Cho phép thay đổi chiều cao nhưng không thay đổi chiều rộng */
+      box-sizing: border-box; /* Đảm bảo không tràn ra ngoài ô chứa */
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px; /* Tạo khoảng cách giữa button và textarea */
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Đảm bảo các ô không lấn nhau */
+    td {
+      overflow: hidden;
+      word-wrap: break-word; /* Tự động xuống dòng nếu nội dung quá dài */
+    }
+  </style>
+
+</head>
+<body>
+<form action="/admin/respond-support" method="POST">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Người gửi</th>
+      <th>Yêu cầu</th>
+      <th>Phản hồi</th>
+      <th>Xóa phiếu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request : ${requests}">
+      <td th:text="${request.id}"></td>
+      <td th:text="${request.username}"></td>
+      <td th:text="${request.message}"></td>
+      <td>
+        <form action="/admin/respond-support" method="POST">
+          <textarea name="response" placeholder="Nhập phản hồi cho người dùng" required></textarea>
+          <input type="hidden" name="requestId" th:value="${request.id}" />
+          <button type="submit">Phản hồi</button>
+        </form>
+      </td>
+      <td>
+        <form action="/admin/delete-support" method="POST">
+          <input type="hidden" name="requestId" th:value="${request.id}" />
+          <button type="submit">Xóa phiếu</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+</body>
+</html>

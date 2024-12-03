@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thông tin yêu cầu hỗ trợ</title>
+  <style>
+    /* Tạo kiểu cho trang xem yêu cầu hỗ trợ */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto 20px;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007BFF;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+
+</head>
+<body>
+<h2>Các yêu cầu hỗ trợ của bạn</h2>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nội dung yêu cầu</th>
+    <th>Phản hồi từ Admin</th>
+    <th>Trạng thái</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="request : ${userRequests}">
+    <td th:text="${request.id}"></td>
+    <td th:text="${request.message}"></td>
+    <td th:text="${request.adminResponse != null ? request.adminResponse : 'Chưa có phản hồi'}"></td>
+    <td th:text="${request.status}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Thêm đường dẫn quay lại trang yêu cầu hỗ trợ -->
+<a href="/customer/request-support">Quay lại trang gửi yêu cầu hỗ trợ</a>
+
+</body>
+</html>

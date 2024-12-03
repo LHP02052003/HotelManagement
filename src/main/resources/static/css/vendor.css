@@ -454,3 +454,29 @@ body.chocolat-open>.chocolat-image-wrapper {
 .chocolat-zoomable.chocolat-zooming-out .chocolat-img {
   transition: margin .2s ease;
 }
+
+.chat-logo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.chat-logo:hover {
+  background-color: #0056b3;
+}
+
+.chat-logo svg {
+  fill: #fff;
+  width: 30px;
+  height: 30px;
+}
