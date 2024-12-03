@@ -19,6 +19,29 @@ public class Booking {
     private int numberOfGuests;  // Số lượng khách
     private String roomNumber; // Số phòng, ví dụ: "500A"
     private double price;
+    private boolean isCheckedIn;
+    private boolean isCheckedOut;
+    private String checkInQrCodeBase64;
+    private String checkOutQrCodeBase64;
+
+    // Getter và setter cho check-in QR
+    public String getCheckInQrCodeBase64() {
+        return checkInQrCodeBase64;
+    }
+
+    public void setCheckInQrCodeBase64(String checkInQrCodeBase64) {
+        this.checkInQrCodeBase64 = checkInQrCodeBase64;
+    }
+
+    // Getter và setter cho check-out QR
+    public String getCheckOutQrCodeBase64() {
+        return checkOutQrCodeBase64;
+    }
+
+    public void setCheckOutQrCodeBase64(String checkOutQrCodeBase64) {
+        this.checkOutQrCodeBase64 = checkOutQrCodeBase64;
+    }
+
 
 
 

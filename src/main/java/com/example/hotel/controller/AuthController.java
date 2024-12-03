@@ -69,7 +69,7 @@
                 session.setAttribute("role", existingUser.getRole());
 
                 // Điều hướng dựa trên vai trò người dùng
-                String redirectUrl = existingUser.getRole().equals("ADMIN") ? "/admin" : "/";
+                String redirectUrl = existingUser.getRole().equals("ADMIN") ? "/" : "/";
                 return ResponseEntity.ok(redirectUrl);  // Trả về URL để chuyển hướng
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sai tài khoản hoặc mật khẩu!");

@@ -18,7 +18,9 @@
       <th>Ngày trả phòng</th>
       <th>Loại phòng</th>
       <th>Số người</th>
-      <th>Giá phòng (TVND)</th> <!-- Cột hiển thị giá phòng -->
+      <th>Giá phòng (TVND)</th>
+      <th>QR check in</th>
+      <th>QR check out</th>
       <th>Hủy đặt</th>
     </tr>
     </thead>
@@ -30,6 +32,12 @@
       <td th:text="${booking.roomType}"></td>
       <td th:text="${booking.numberOfGuests}"></td>
       <td th:text="${booking.price}"></td> <!-- Hiển thị giá phòng -->
+      <td>
+        <img th:src="'data:image/png;base64,' + ${booking.checkInQrCodeBase64}" alt="QR Code" style="width: 150px; height: 150px;">
+      </td>
+      <td>
+        <img th:src="'data:image/png;base64,' + ${booking.checkOutQrCodeBase64}" alt="Check-Out QR" style="width: 150px; height: 150px;">
+      </td>
       <td>
         <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
           <button type="submit" class="btn btn-danger">Hủy</button>

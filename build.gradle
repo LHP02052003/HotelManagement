@@ -22,9 +22,17 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://repo.microsoft.com/mssql-jdbc' }
+    google()
 }
 
 dependencies {
+    // ZXing library for QR code generation
+    implementation 'com.google.zxing:core:3.5.1'
+    implementation 'com.google.zxing:javase:3.5.1'
+
+    // For Base64 encoding and decoding
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.15'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'

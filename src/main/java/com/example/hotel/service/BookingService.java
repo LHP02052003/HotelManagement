@@ -28,6 +28,11 @@ public class BookingService {
         bookingRepository.deleteById(id);
     }
 
+    public Booking getBookingById(Long id) {
+        return bookingRepository.findById(id).orElse(null);
+    }
+
+
     // Thêm phương thức này
     public List<Booking> findAllBookings() {
         return bookingRepository.findAll(); // Giả định rằng bookingRepository đã có phương thức này
