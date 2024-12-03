@@ -8,7 +8,6 @@
     import com.google.zxing.common.BitMatrix;
     import com.google.zxing.qrcode.QRCodeWriter;
     import jakarta.servlet.http.HttpSession;
-    import org.springframework.http.ResponseEntity;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
@@ -136,7 +135,7 @@
                     String checkInQrBase64 = Base64.getEncoder().encodeToString(checkInPngOutputStream.toByteArray());
 
                     // Tạo mã QR cho check-out
-                    String checkOutQrContent = "http://localhost:8080/booking/checkout/" + booking.getId();
+                    String checkOutQrContent = "http://localhost:8080/booking/check-out/" + booking.getId();
                     BitMatrix checkOutBitMatrix = qrCodeWriter.encode(checkOutQrContent, BarcodeFormat.QR_CODE, 300, 300);
                     ByteArrayOutputStream checkOutPngOutputStream = new ByteArrayOutputStream();
                     MatrixToImageWriter.writeToStream(checkOutBitMatrix, "PNG", checkOutPngOutputStream);
@@ -171,42 +170,50 @@
                 return "redirect:/booking/user-bookings";
             }
         }
-
         @GetMapping("/check-in/{id}")
-        @ResponseBody
-        public ResponseEntity<String> checkIn(@PathVariable Long id) {
+        public String checkIn(@PathVariable Long id, Model model) {
             Booking booking = bookingService.getBookingById(id);
             if (booking == null) {
-                return ResponseEntity.badRequest().body("Không tìm thấy booking.");
+                model.addAttribute("message", "Không tìm thấy booking.");
+                return "checkin-result"; // Trang hiển thị kết quả
             }
             if (booking.isCheckedIn()) {
-                return ResponseEntity.badRequest().body("Booking đã check-in trước đó.");
+                model.addAttribute("message", "Booking đã check-in trước đó.");
+                return "checkin-result";
             }
 
             booking.setCheckedIn(true);
             bookingService.saveBooking(booking);
-            return ResponseEntity.ok("Check-in thành công cho booking ID: " + id);
+
+            model.addAttribute("message", "Check-in thành công!");
+            model.addAttribute("redirectUrl", "/booking/user-bookings");
+            return "checkin-result"; // Trang hiển thị kết quả
         }
 
+
         @GetMapping("/check-out/{id}")
-        @ResponseBody
-        public ResponseEntity<String> checkOut(@PathVariable Long id) {
+        public String checkOut(@PathVariable Long id, Model model) {
             Booking booking = bookingService.getBookingById(id);
             if (booking == null) {
-                return ResponseEntity.badRequest().body("Không tìm thấy booking.");
+                model.addAttribute("message", "Không tìm thấy booking.");
+                return "checkin-result";
             }
             if (!booking.isCheckedIn()) {
-                return ResponseEntity.badRequest().body("Bạn chưa check-in. Không thể check-out.");
+                model.addAttribute("message", "Bạn chưa check-in. Không thể check-out.");
+                return "checkin-result";
             }
             if (booking.isCheckedOut()) {
-                return ResponseEntity.badRequest().body("Booking đã check-out trước đó.");
+                model.addAttribute("message", "Booking đã check-out trước đó.");
+                return "checkin-result";
             }
 
             booking.setCheckedOut(true);
             bookingService.saveBooking(booking);
-            return ResponseEntity.ok("Check-out thành công cho booking ID: " + id);
-        }
 
+            model.addAttribute("message", "Check-out thành công!");
+            model.addAttribute("redirectUrl", "/booking/user-bookings");
+            return "checkin-result";
+        }
 
 
     }

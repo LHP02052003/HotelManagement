@@ -41,8 +41,6 @@
     <p>Loại phòng COUPLE: Tổng số - <span th:text="${totalCouple}"></span>, Còn lại - <span th:text="${remainingCouple}"></span></p>
     <p>Loại phòng FAMILY: Tổng số - <span th:text="${totalFamily}"></span>, Còn lại - <span th:text="${remainingFamily}"></span></p>
   </div>
-
-
   <table>
     <tr>
       <th>ID</th>
@@ -52,6 +50,7 @@
       <th>Ngày trả phòng</th>
       <th>Loại phòng</th>
       <th>Số người đăng ký</th>
+      <th>Trạng thái</th> <!-- Thêm cột trạng thái -->
       <th>Hủy đặt</th>
     </tr>
     <tr th:each="booking : ${bookings}">
@@ -60,8 +59,9 @@
       <td th:text="${booking.username}"></td>
       <td th:text="${booking.checkInDate}"></td>
       <td th:text="${booking.checkOutDate}"></td>
-      <td th:text="${booking.roomType}"></td> <!-- Loại phòng -->
+      <td th:text="${booking.roomType}"></td>
       <td th:text="${booking.numberOfGuests}"></td>
+      <td th:text="${booking.bookingStatus}"></td> <!-- Gọi phương thức getBookingStatus -->
       <td>
         <form th:action="@{/booking/cancel/{id}(id=${booking.id})}" method="post">
           <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
@@ -69,6 +69,7 @@
       </td>
     </tr>
   </table>
+
 </div>
 </body>
 </html>

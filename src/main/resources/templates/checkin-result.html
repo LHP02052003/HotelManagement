@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kết quả</title>
+  <script>
+    setTimeout(() => {
+      const redirectUrl = document.getElementById("redirect-url").value;
+      window.location.href = redirectUrl;
+    }, 5000);
+  </script>
+</head>
+<body>
+<div style="text-align: center; margin-top: 50px;">
+  <h1 th:text="${message}"></h1>
+  <p>Chuyển về trang booking của bạn sau 5 giây...</p>
+  <input type="hidden" id="redirect-url" th:value="${redirectUrl}">
+</div>
+</body>
+</html>

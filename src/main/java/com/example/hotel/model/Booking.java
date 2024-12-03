@@ -41,6 +41,15 @@ public class Booking {
     public void setCheckOutQrCodeBase64(String checkOutQrCodeBase64) {
         this.checkOutQrCodeBase64 = checkOutQrCodeBase64;
     }
+    public String getBookingStatus() {
+        if (isCheckedOut) {
+            return "Check-out thành công";
+        } else if (isCheckedIn) {
+            return "Check-in thành công";
+        } else {
+            return "Chưa check-in";
+        }
+    }
 
 
 
