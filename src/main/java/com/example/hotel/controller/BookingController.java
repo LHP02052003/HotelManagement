@@ -35,10 +35,14 @@
                                     HttpSession session,
                                     Model model) {
             String username = (String) session.getAttribute("username");
+            String role = (String) session.getAttribute("role");
             if (username == null) {
                 return "redirect:/login"; // Chuyển về trang đăng nhập nếu chưa đăng nhập
             }
-
+            if ("ADMIN".equals(role)) {
+                model.addAttribute("errorMessage", "Admin không thể đặt phòng.");
+                return "booking-error"; // Trang lỗi đặt phòng
+            }
             // Kiểm tra phòng còn trống
             int totalRooms = switch (roomType) {
                 case "DELUXE" -> 60;
@@ -64,13 +68,13 @@
             double roomPricePerNight = 0;
             switch (roomType) {
                 case "DELUXE":
-                    roomPricePerNight = 11.5; // Giá phòng DELUXE ( đơn vị triệu vnđ )
+                    roomPricePerNight = 7; // Giá phòng DELUXE ( đơn vị triệu vnđ )
                     break;
                 case "COUPLE":
                     roomPricePerNight = 9.0; // Giá phòng COUPLE  ( đơn vị triệu vnđ )
                     break;
                 case "FAMILY":
-                    roomPricePerNight = 7.0; // Giá phòng FAMILY  ( đơn vị triệu vnđ )
+                    roomPricePerNight = 11.5; // Giá phòng FAMILY  ( đơn vị triệu vnđ )
                     break;
             }
 

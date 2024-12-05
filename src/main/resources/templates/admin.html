@@ -43,7 +43,7 @@
   </div>
   <table>
     <tr>
-      <th>ID</th>
+
       <th>Số phòng</th>
       <th>Tên người đặt</th>
       <th>Ngày nhận phòng</th>
@@ -54,7 +54,6 @@
       <th>Hủy đặt</th>
     </tr>
     <tr th:each="booking : ${bookings}">
-      <td th:text="${booking.id}"></td>
       <td th:text="${booking.roomNumber}"></td>
       <td th:text="${booking.username}"></td>
       <td th:text="${booking.checkInDate}"></td>
@@ -72,4 +71,19 @@
 
 </div>
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const table = document.querySelector("table");
+    const rows = Array.from(table.querySelectorAll("tr")).slice(1); // Bỏ qua header
+
+    rows.sort((a, b) => {
+      const dateA = new Date(a.cells[3].textContent.trim()); // Cột ngày trả phòng
+      const dateB = new Date(b.cells[3].textContent.trim());
+      return dateA - dateB; // Sắp xếp tăng dần
+    });
+
+    rows.forEach(row => table.appendChild(row)); // Đặt lại thứ tự dòng
+  });
+</script>
+
 </html>
